@@ -1,6 +1,8 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
+const flatpickr = require("flatpickr");
+
 const button = document.getElementById("start-button");
    button.addEventListener("click",() => {
   const selectedDate = selectedDates[0];
