@@ -1,6 +1,9 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
+let selectedDate;
+let countdownTimer;
+
 function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;
@@ -26,14 +29,17 @@ function addLeadingZero(value) {
 
 const button = document.getElementById("start-button");
 button.addEventListener("click",() => {
-  const selectedDate = selectedDates[0];
   countdownTimer = setInterval(() => {
     const timeRemaining = selectedDate.getTime() - new Date().getTime();
     if (timeRemaining <= 0) {
       clearInterval(countdownTimer);
       // countdown finished
     } else {
-      // update UI with time remaining
+      const { days, hours, minutes, seconds } = convertMs(timeRemaining);
+      document.querySelector('[data-days]').textContent = addLeadingZero(days);
+      document.querySelector('[data-hours]').textContent = addLeadingZero(hours);
+      document.querySelector('[data-minutes]').textContent = addLeadingZero(minutes);
+      document.querySelector('[data-seconds]').textContent = addLeadingZero(seconds);
     }
   }, 1000);
 });
@@ -45,9 +51,10 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     const currentDate = new Date();
-    const selectedDate = selectedDates[0];
+    selectedDate = selectedDates[0];
     if (selectedDate < currentDate) {
       window.alert("Please choose a date in the future");
+      button.disabled = true;
     } else {
       button.disabled = false;
     }
