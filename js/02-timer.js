@@ -7,27 +7,15 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    console.log(selectedDates[0]);
-  },
-};
-
-flatpickr("#datetime-picker", options);
-
-const currentDate = new Date();
-const selectedDate = selectedDates[0];
-if (selectedDate < currentDate) {
-  window.alert("Please choose a date in the future");
-} else {
-   button.disabled = false;
-  // start countdown
-}
-
-const button = document.getElementById("button");
-button.disabled = true;
-
-let countdownTimer;
-const button = document.getElementById("button");
-startButton.addEventListener("click", () => {
+    const currentDate = new Date();
+    const selectedDate = selectedDates[0];
+    if (selectedDate < currentDate) {
+      window.alert("Please choose a date in the future");
+    } else {
+      button.disabled = false;
+      // start countdown
+      const button = document.getElementById("start-button");
+      button.addEventListener("click",() => {
   const selectedDate = selectedDates[0];
   countdownTimer = setInterval(() => {
     const timeRemaining = selectedDate.getTime() - new Date().getTime();
@@ -63,3 +51,4 @@ function addLeadingZero(value) {
   return value.toString().padStart(2, "0");
 };
 
+flatpickr("#datetime-picker", options);
